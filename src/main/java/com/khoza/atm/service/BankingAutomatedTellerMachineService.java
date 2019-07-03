@@ -247,8 +247,8 @@ public class BankingAutomatedTellerMachineService
               }
 
               System.out.println("Account Number: " + clientAccount.getAccountNumber() + " Currency: " + clientAccount.getCurrencyCode().getCurrencyCode().getCurrencyCode()+
-                                " Currency Balance: " + String.format("%.2f",currencyBalance) + " Conversion Rate: " +  clientAccount.getCurrencyCode().getCurrencyCode().getRate() +
-                                 " ZAR Amount : " + clientAccount.getBalance());
+                                " Currency Balance: " + String.format("%.2f", clientAccount.getBalance()) + " Conversion Rate: " +  clientAccount.getCurrencyCode().getCurrencyCode().getRate() +
+                                 " ZAR Amount : " + currencyBalance );
 
           }
 
