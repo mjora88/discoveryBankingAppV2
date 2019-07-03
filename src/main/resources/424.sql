@@ -5,6 +5,6 @@ FROM client c, client_account a, account_type d
     WHERE c.client_id =  a.client_id
     GROUP BY c.client_id )
 WHERE c.client_id = a.client_id
-AND d.transactional = true
 AND HIGHEST = a.display_balance
 AND a.account_type_code = d.account_type_code
+AND d.transactional = 'true'
