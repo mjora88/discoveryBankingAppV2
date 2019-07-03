@@ -1,25 +1,21 @@
 package com.khoza.atm.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Currency_conversion_Rate")
 public class CurrencyConversionRate {
 
   @Id
-  @Column
+  @Column(name = "CURRENCY_CODE")
   private String currencyCode;
 
   @Column
   private String conversionIndicator;
 
-  @Column
-  private String rateDecimal;
-
+  @Column (name = "RATE")
+  private String rate;
 
   public String getCurrencyCode() {
     return currencyCode;
@@ -37,11 +33,11 @@ public class CurrencyConversionRate {
     this.conversionIndicator = conversionIndicator;
   }
 
-  public String getRateDecimal() {
-    return rateDecimal;
+  public String getRate() {
+    return rate;
   }
 
-  public void setRateDecimal(String rateDecimal) {
-    this.rateDecimal = rateDecimal;
+  public void setRateDecimal(String rate) {
+    this.rate = rate;
   }
 }

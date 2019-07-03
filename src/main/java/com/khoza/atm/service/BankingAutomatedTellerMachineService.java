@@ -166,8 +166,13 @@ public class BankingAutomatedTellerMachineService
             withdrawCash(accounts, input);
           }
           limit = creditCardLimit.getAccountLimit();
+          boolean isCheque = false;
           System.out.println("Your account has an overdraft limit of R" + String.format("%.2f", limit) );
         }
+
+          if (selectedAccount.getAccountTypeCode().getAccountTypeCode().equalsIgnoreCase("CHQ")){
+              limit = 10000;
+          }
 
         if (selectedAccount.getBalance() <= 0 && limit <= 0)
         {
@@ -176,7 +181,7 @@ public class BankingAutomatedTellerMachineService
         }
 
         double maxToWithdraw = selectedAccount.getBalance() + limit;
-        System.out.println("Please enter Amount to withdraw (Max including overdraft (if available) : " + String.format("%.2f", maxToWithdraw) + "):");
+        System.out.println("Please enter Amount to withdraw (Max including overdraft (if available) : " + String.format("%.2f", selectedAccount.getBalance()) + "):");
         System.out.println("[Process 0 to go back to the main menu]\n");
         long amountInput = input.nextLong();
 
@@ -225,13 +230,30 @@ public class BankingAutomatedTellerMachineService
   {
     if (accounts != null && !accounts.isEmpty())
     {
-      Currency primatyCurrency = Currency.getInstance("ZAR");
-      Currency toCurrency = Currency.getInstance("USD");
-      System.out.println("List Of Accounts\n");
 
-      System.out.println("#\t\t\tAccount Number\t\t\t" + primatyCurrency.getCurrencyCode() + "\t\t\t" + toCurrency.getCurrencyCode() + "\t\t\tRate\n");
-      accounts.sort((acc1, acc2) -> (int) (acc2.getBalance() - acc1.getBalance()));
-      accounts.forEach(account -> System.out.println("#: " + account.getAccountNumber() + ".\tAcc# :" + account.getAccountNumber() + "\tBalance: R" + String.format("%.2f", account.getBalance()) + "\t" + toCurrency.getSymbol() + " " /*+ String.format("%.2f", account.getBalance(toCurrency))+ "\t" + account.getRate(toCurrency) */));
+      for (ClientAccount clientAccount: accounts) {
+
+          if (clientAccount.getAccountTypeCode().getAccountTypeCode().equalsIgnoreCase("CFCA")) {
+
+              double currencyBalance = 0.0;
+
+              if (clientAccount.getCurrency().getCurrencyCode().getConversionIndicator().equalsIgnoreCase("/")) {
+
+                  currencyBalance = clientAccount.getBalance() / Double.parseDouble(clientAccount.getCurrencyCode().getCurrencyCode().getRate());
+
+              } else {
+
+                  currencyBalance = clientAccount.getBalance() * Double.parseDouble(clientAccount.getCurrencyCode().getCurrencyCode().getRate());
+              }
+
+              System.out.println("Account Number: " + clientAccount.getAccountNumber() + " Currency: " + clientAccount.getCurrencyCode().getCurrencyCode().getCurrencyCode()+
+                                " Currency Balance: " + String.format("%.2f",currencyBalance) + " Conversion Rate: " +  clientAccount.getCurrencyCode().getCurrencyCode().getRate() +
+                                 " ZAR Amount : " + clientAccount.getBalance());
+
+          }
+
+      }
+
     }
     else
     {

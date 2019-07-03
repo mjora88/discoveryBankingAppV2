@@ -3,24 +3,27 @@ package com.khoza.atm.model;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table (name ="CURRENCY" )
-public class Currency {
+public class Currency implements Serializable {
 
   @Id
-  @Column(name = "CURRENCY_CODE")
-  private String currencyCode;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "CURRENCY_CODE", nullable = false, referencedColumnName = "CURRENCY_CODE")
+  private CurrencyConversionRate currencyCode;
+
   @Column(name = "DECIMAL_PLACES")
   private int decimalPlaces;
   @Column (name = "DESCRIPTION")
   private String description;
 
-  public String getCurrencyCode() {
+  public CurrencyConversionRate getCurrencyCode() {
     return currencyCode;
   }
 
-  public void setCurrencyCode(String currencyCode) {
+  public void setCurrencyCode(CurrencyConversionRate currencyCode) {
     this.currencyCode = currencyCode;
   }
 
