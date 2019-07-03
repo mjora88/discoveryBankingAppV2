@@ -21,3 +21,6 @@ TO RUN, exec the following:
 >mvn spring-boot:run
 
 These commands are to be executed inside the root directory where there is pom.xml
+
+TO run the sql files , 424.sql and 425.sql you need to go to  http://localhost:8080/h2-console/
+and on the JDBC URL please add the URL "jdbc:h2:mem:banksystem" that you can find on appplication.properties
